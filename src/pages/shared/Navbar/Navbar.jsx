@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import userDefaultPicture from '../../../assets/user.png'
 import { useContext } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
@@ -46,7 +46,7 @@ const Navbar = () => {
                 </label>
                 {
                     user ? <button onClick={handleLogOut} className="btn">Logout</button> 
-                    : <button className="btn">Login</button>
+                    : <Link to={'/login'} className="btn">Login</Link>
                 }
             </div>
         </div>

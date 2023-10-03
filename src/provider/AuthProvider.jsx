@@ -8,16 +8,20 @@ const AuthProvider = ({children}) => {
     const auth = getAuth(app);
 
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true)
 
     const createUser = (email, password) =>{
+        setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
     const singIn = (email, password) =>{
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    const logOut =()=>{
+    const logOut =()=>{    
+        setLoading(true)    
         return signOut(auth);
     }
 
@@ -25,6 +29,7 @@ const AuthProvider = ({children}) => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser)=>{
             console.log("User in the auth state changed", currentUser);
             setUser(currentUser);
+            setLoading(false)
         })
 
         return ()=>{
@@ -32,7 +37,7 @@ const AuthProvider = ({children}) => {
         }
     },[])
 
-    const authInfo = {user, createUser, logOut, singIn}
+    const authInfo = {user, createUser, logOut, singIn, loading}
     return (
         <AuthContext.Provider value={authInfo}>
             {children}
